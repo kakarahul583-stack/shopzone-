@@ -1,6 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShopZone - Best Amazon Deals</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#eaeded}
+.top-nav{background:#131921;color:white;padding:12px;display:flex;gap:10px;align-items:center;position:sticky;top:0;z-index:99}
+.logo{font-weight:900;font-size:22px}
+.logo span:last-child{color:#febd69}
+.search-box{flex:1;display:flex;background:white;border-radius:4px;overflow:hidden;max-width:700px}
+.search-box input{flex:1;padding:10px;border:none;outline:none}
+.search-box button{background:#febd69;border:none;padding:0 15px}
+.cat-bar{background:#232f3e;color:white;display:flex;gap:12px;padding:8px 12px;overflow-x:auto;font-size:13px}
+.hero{background:linear-gradient(90deg,#ff9900,#ff5e00);color:white;text-align:center;padding:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;padding:12px;max-width:1100px;margin:auto}
+.card{background:white;border-radius:8px;overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,.1)}
+.card img{width:100%;height:130px;object-fit:contain;padding:8px}
+.card-body{padding:10px}
+.card h3{font-size:13px;height:36px;overflow:hidden}
+.price{color:#B12704;font-weight:700}
+.badge{background:#cc0c39;color:white;font-size:10px;padding:2px 5px;border-radius:3px;display:inline-block;margin-bottom:4px}
+.btn{background:#ffd814;border:none;border-radius:20px;padding:7px;width:100%;margin-top:8px;font-weight:600;display:block;text-align:center;text-decoration:none;color:black;font-size:12px}
+.footer{background:#131921;color:#aaa;text-align:center;padding:15px;font-size:12px;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="top-nav"><div class="logo"><span>Shop</span><span style="color:#febd69">Zone</span></div>
+<div class="search-box"><input id="searchInput" type="text" placeholder="Search on ShopZone"><button onclick="doSearch()">🔍</button></div></div>
+<div class="cat-bar"><span onclick="filterCat('all')">All</span><span onclick="filterCat('earbuds')">Earbuds</span><span onclick="filterCat('watch')">Watch</span><span onclick="filterCat('laptop')">Laptop</span><span onclick="filterCat('mobile')">Mobile</span></div>
+<div class="hero"><h1>Mega Sale Up to 50% Off 🔥</h1><p>ID: shopzone010e-21 - Best Deals by Rahul</p></div>
+<div class="grid" id="grid"></div>
+<div class="footer">© 2026 ShopZone | Associate ID: shopzone010e-21 | We earn from qualifying purchases</div>
+<script>
+const TAG="shopzone010e-21";
+const products=[
+{name:"Wireless Earbuds Pro",cat:"earbuds",price:"₹799",img:"https://m.media-amazon.com/images/I/71k3gO6yyKL._SX679_.jpg",kw:"wireless+earbuds"},
+{name:"Smart Watch BT Calling",cat:"watch",price:"₹1,799",img:"https://m.media-amazon.com/images/I/61ActU9NS0L._SX679_.jpg",kw:"smart+watch"},
+{name:"Lenovo Laptop Slim",cat:"laptop",price:"₹38,990",img:"https://m.media-amazon.com/images/I/71e9V2k2RXL._SX679_.jpg",kw:"laptop"},
+{name:"Mi Power Bank 20000mAh",cat:"powerbank",price:"₹1,999",img:"https://m.media-amazon.com/images/I/71lVwl3q-kL._SX679_.jpg",kw:"power+bank"},
+{name:"Bluetooth Speaker",cat:"speaker",price:"₹1,299",img:"https://m.media-amazon.com/images/I/71o8Q5XJS5L._SX679_.jpg",kw:"bluetooth+speaker"},
+{name:"Redmi Note 13 Pro",cat:"mobile",price:"₹24,999",img:"https://m.media-amazon.com/images/I/71CXhVhpM0L._SX679_.jpg",kw:"mobile+phone"}
+];
+function render(list){
+document.getElementById('grid').innerHTML=list.map(p=>`<div class="card"><img src="${p.img}"><div class="card-body"><div class="badge">Deal</div><h3>${p.name}</h3><div class="price">${p.price}</div><a class="btn" href="https://www.amazon.in/s?k=${p.kw}&tag=${TAG}" target="_blank">Buy on Amazon</a></div></div>`).join('');
+}
+function doSearch(){let q=document.getElementById('searchInput').value.toLowerCase();let f=products.filter(p=>p.name.toLowerCase().includes(q)||p.cat.includes(q));render(f.length?f:products);}
+function filterCat(c){if(c=='all'){render(products);return;}document.getElementById('searchInput').value=c;doSearch();}
+document.getElementById('searchInput').addEventListener('input',doSearch);
+render(products);
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ShopZone - Amazon Best Deals</title>

@@ -142,4 +142,92 @@ document.getElementById('searchInput').addEventListener('input',doSearch);
 render(products);
 </script>
 </body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShopZone - Login Added</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#eaeded}
+.top-nav{background:#131921;color:white;padding:10px 12px;display:flex;gap:10px;align-items:center;position:sticky;top:0;z-index:99;justify-content:space-between}
+.logo{font-weight:900;font-size:22px}
+.logo span:last-child{color:#febd69}
+.search-box{flex:1;display:flex;background:white;border-radius:4px;overflow:hidden;max-width:500px;margin:0 10px}
+.search-box input{flex:1;padding:9px;border:none;outline:none}
+.search-box button{background:#febd69;border:none;padding:0 12px;cursor:pointer}
+.nav-right{display:flex;gap:12px;align-items:center;font-size:13px;white-space:nowrap}
+.nav-right span{cursor:pointer}
+.login-btn{background:#febd69;color:#131921;padding:6px 12px;border-radius:4px;font-weight:700;cursor:pointer}
+.cat-bar{background:#232f3e;color:white;display:flex;gap:12px;padding:8px 12px;overflow-x:auto;font-size:13px}
+.hero{background:linear-gradient(90deg,#ff9900,#ff5e00);color:white;text-align:center;padding:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;padding:12px;max-width:1100px;margin:auto}
+.card{background:white;border-radius:8px;overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,.1)}
+.card img{width:100%;height:130px;object-fit:contain;padding:8px}
+.card-body{padding:10px}
+.card h3{font-size:13px;height:36px;overflow:hidden}
+.price{color:#B12704;font-weight:700}
+.btn{background:#ffd814;border-radius:20px;padding:7px;width:100%;margin-top:8px;font-weight:600;display:block;text-align:center;text-decoration:none;color:black;font-size:12px}
+.footer{background:#131921;color:#aaa;text-align:center;padding:15px;font-size:12px;margin-top:20px}
+
+/* Login Popup */
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:200;justify-content:center;align-items:center}
+.modal-content{background:white;padding:25px;border-radius:8px;width:90%;max-width:350px}
+.modal-content h2{margin-bottom:15px;font-size:18px}
+.modal-content input{width:100%;padding:10px;margin:8px 0;border:1px solid #ccc;border-radius:4px}
+.modal-content button{width:100%;padding:10px;background:#febd69;border:none;border-radius:4px;font-weight:700;margin-top:10px;cursor:pointer}
+.close{float:right;font-size:20px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="top-nav">
+<div class="logo"><span>Shop</span><span style="color:#febd69">Zone</span></div>
+<div class="search-box"><input id="searchInput" type="text" placeholder="Search on ShopZone"><button>🔍</button></div>
+<div class="nav-right">
+<span id="userName">Hello, Guest</span>
+<div class="login-btn" onclick="openLogin()">Login</div>
+</div>
+</div>
+
+<div class="cat-bar">
+<span>All</span><span>Earbuds</span><span>Watch</span><span>Laptop</span>
+</div>
+
+<div class="hero"><h1>Welcome to ShopZone 🔥</h1><p>Login karke best deals pao - ID: shopzone010e-21</p></div>
+
+<div class="grid" id="grid"></div>
+
+<!-- LOGIN MODAL -->
+<div class="modal" id="loginModal">
+<div class="modal-content">
+<span class="close" onclick="closeLogin()">&times;</span>
+<h2>Login to ShopZone</h2>
+<input id="nameInput" type="text" placeholder="Apna naam likho">
+<input type="email" placeholder="Email (optional)">
+<input type="password" placeholder="Password (optional)">
+<button onclick="doLogin()">Login</button>
+<p style="font-size:11px;margin-top:10px;color:gray;text-align:center">*Ye demo login hai, Amazon pe kharidne ke liye Amazon login lagega</p>
+</div>
+</div>
+
+<div class="footer">© 2026 ShopZone | ID: shopzone010e-21</div>
+
+<script>
+const TAG="shopzone010e-21";
+const products=[
+{name:"Wireless Earbuds Pro",price:"₹799",img:"https://m.media-amazon.com/images/I/71k3gO6yyKL._SX679_.jpg",kw:"earbuds"},
+{name:"Smart Watch BT Calling",price:"₹1,799",img:"https://m.media-amazon.com/images/I/61ActU9NS0L._SX679_.jpg",kw:"smart+watch"},
+{name:"Lenovo Laptop",price:"₹38,990",img:"https://m.media-amazon.com/images/I/71e9V2k2RXL._SX679_.jpg",kw:"laptop"},
+{name:"Mi Power Bank",price:"₹1,999",img:"https://m.media-amazon.com/images/I/71lVwl3q-kL._SX679_.jpg",kw:"power+bank"},
+{name:"Bluetooth Speaker",price:"₹1,299",img:"https://m.media-amazon.com/images/I/71o8Q5XJS5L._SX679_.jpg",kw:"speaker"},
+{name:"Redmi Mobile",price:"₹24,999",img:"https://m.media-amazon.com/images/I/71CXhVhpM0L._SX679_.jpg",kw:"mobile"}
+];
+function render(){document.getElementById('grid').innerHTML=products.map(p=>`<div class="card"><img src="${p.img}"><div class="card-body"><h3>${p.name}</h3><div class="price">${p.price}</div><a class="btn" href="https://www.amazon.in/s?k=${p.kw}&tag=${TAG}" target="_blank">Buy on Amazon</a></div></div>`).join('');}
+function openLogin(){document.getElementById('loginModal').style.display='flex';}
+function closeLogin(){document.getElementById('loginModal').style.display='none';}
+function doLogin(){let n=document.getElementById('nameInput').value;if(n){document.getElementById('userName').innerText="Hello, "+n;localStorage.setItem('shopzone_user',n);}closeLogin();alert("Welcome "+n+"! Ab aap ShopZone pe login ho!");}
+render();
+let saved=localStorage.getItem('shopzone_user');if(saved){document.getElementById('userName').innerText="Hello, "+saved;}
+</script>
+</body>
 </html>

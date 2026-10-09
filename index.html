@@ -1,351 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ShopZone - Rahul Sharma</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ShopZone - Shopping App</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#131921">
+<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#eaeded}
-.top{background:#131921;color:white;padding:10px 12px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:99}
-.logo{font-weight:900;font-size:22px;flex-shrink:0}
-.logo b{color:#febd69}
-.search{flex:1;display:flex;background:white;border-radius:4px;overflow:hidden;max-width:600px}
-.search input{flex:1;padding:10px;border:0;outline:0}
-.search button{background:#febd69;border:0;padding:0 12px}
-.right{display:flex;align-items:center;gap:10px;font-size:13px}
-.login{background:#febd69;color:#000;padding:6px 12px;border-radius:4px;font-weight:700;cursor:pointer}
-.cat{background:#232f3e;color:white;display:flex;gap:14px;padding:8px 12px;font-size:13px;overflow:auto}
-.cat span{cursor:pointer;white-space:nowrap}
-.banner{background:linear-gradient(90deg,#ff9900,#ff6200);color:white;text-align:center;padding:22px 12px}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:12px;max-width:1000px;margin:auto}
-@media(min-width:600px){.grid{grid-template-columns:repeat(4,1fr)}}
-.card{background:white;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.15)}
-.card img{width:100%;height:135px;object-fit:contain;padding:8px;background:white}
-.body{padding:10px}
-.body h3{font-size:13px;height:32px;overflow:hidden}
-.price{color:#B12704;font-weight:700;margin-top:4px}
-.btn{background:#ffd814;display:block;text-align:center;padding:8px;border-radius:20px;margin-top:8px;text-decoration:none;color:#000;font-size:12px;font-weight:700}
-.footer{background:#131921;color:#999;text-align:center;padding:16px;font-size:12px;margin-top:15px}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999;justify-content:center;align-items:center}
-.box{background:white;padding:20px;border-radius:8px;width:90%;max-width:320px}
-.box input{width:100%;padding:10px;margin:6px 0;border:1px solid #ccc;border-radius:4px}
-.box button{width:100%;padding:10px;background:#febd69;border:0;border-radius:4px;font-weight:700;margin-top:8px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,Roboto}
+body{background:#f1f3f6;padding-bottom:70px}
+.header{background:#131921;color:#fff;padding:12px;display:flex;gap:10px;align-items:center;position:sticky;top:0;z-index:99}
+.logo{font-weight:900;font-size:22px}.logo span{color:#febd69}
+.search{flex:1;background:#fff;border-radius:8px;display:flex;height:42px;overflow:hidden}
+.search input{flex:1;border:0;padding:0 12px;outline:0}
+.cart{position:relative;font-size:24px} .count{position:absolute;top:-6px;right:-8px;background:#ff6f00;color:#fff;font-size:11px;padding:2px 6px;border-radius:12px}
+.banner{margin:10px;border-radius:14px;background:linear-gradient(135deg,#ff9900,#ff3c00);color:#fff;padding:20px;text-align:center}
+.chips{display:flex;gap:8px;padding:10px;overflow:auto}
+.chip{background:#fff;border:1px solid #ddd;padding:8px 14px;border-radius:20px;font-size:12px;white-space:nowrap}
+.chip.active{background:#000;color:#fff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr);max-width:1100px;margin:auto}}
+.card{background:#fff;border-radius:14px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.card img{width:100%;height:130px;object-fit:contain}
+.card h4{font-size:13px;height:36px;overflow:hidden;margin:6px 0}
+.price{font-weight:900}
+.btn{background:#ffd814;width:100%;border:0;padding:9px;border-radius:22px;font-weight:800;margin-top:8px}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ddd;display:flex;justify-content:space-around;padding:8px 0;z-index:99}
+.b-item{font-size:11px;text-align:center;color:#666}.b-item.active{color:#ff6f00}.b-item div{font-size:22px}
+.page{display:none}.page.active{display:block}
+.detail{position:fixed;inset:0;background:#fff;z-index:200;display:none;overflow:auto}.detail.active{display:block}
+.cart-page{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:150;display:none}.cart-page.active{display:block}
+.cart-box{position:absolute;right:0;top:0;bottom:0;width:85%;max-width:400px;background:#fff;padding:16px;overflow:auto}
 </style>
 </head>
 <body>
-<div class="top">
-<div class="logo">Shop<span><b>Zone</b></span></div>
-<div class="search"><input id="s" placeholder="Search on ShopZone"><button onclick="search()">🔍</button></div>
-<div class="right"><span id="hi">Hello</span><div class="login" onclick="openL()">Login</div></div>
+<div class="header">
+<div class="logo">Shop<span>Zone</span></div>
+<div class="search"><input id="s" placeholder="Search products..."><span style="padding:0 10px">🔍</span></div>
+<div class="cart" onclick="openCart()">🛒<span class="count" id="c1">0</span></div>
 </div>
-<div class="cat"><span onclick="filt('all')">All</span><span onclick="filt('earbuds')">Earbuds</span><span onclick="filt('watch')">Watch</span><span onclick="filt('laptop')">Laptop</span><span onclick="filt('power')">PowerBank</span></div>
-<div class="banner"><h2>Mega Sale Up to 50% Off 🔥</h2><p>Best Amazon Deals - Handpicked by Rahul - ID: shopzone010e-21</p></div>
-<div class="grid" id="grid"></div>
-<div class="footer">© 2026 ShopZone by Rahul Sharma | Tag: shopzone010e-21 | We earn from qualifying purchases<br>💳 Payment Secured by Amazon | UPI | Card | COD</div>
 
-<div class="modal" id="m"><div class="box"><div style="float:right;cursor:pointer" onclick="closeL()">X</div><h3>Login to ShopZone</h3><input id="n" placeholder="Apna Naam"><button onclick="login()">Login</button><p style="font-size:10px;color:gray;margin-top:8px">Demo login hai. Payment Amazon pe hoga.</p></div></div>
+<div id="home" class="page active">
+<div class="banner"><h2>ShopZone App 🔥</h2><p style="font-size:12px;margin-top:4px">Install karke app ki tarah chalao • ID: shopzone010e-21</p><button onclick="installApp()" style="margin-top:10px;background:#fff;color:#ff3c00;border:0;padding:8px 14px;border-radius:20px;font-weight:800">📲 Install App</button></div>
+<div class="chips"><div class="chip active" onclick="filterC('all',this)">ALL</div><div class="chip" onclick="filterC('earbuds',this)">EARBUDS</div><div class="chip" onclick="filterC('watch',this)">WATCH</div><div class="chip" onclick="filterC('laptop',this)">LAPTOP</div><div class="chip" onclick="filterC('mobile',this)">MOBILE</div></div>
+<div class="grid" id="grid"></div>
+</div>
+
+<div class="detail" id="detail"></div>
+
+<div class="cart-page" id="cartPage" onclick="if(event.target.id==='cartPage')closeCart()"><div class="cart-box"><div style="display:flex;justify-content:space-between"><h3>Cart</h3><span onclick="closeCart()" style="font-size:20px">✕</span></div><div id="cartList" style="margin-top:12px"></div><div style="margin-top:15px;border-top:1px dashed #ccc;padding-top:10px"><div style="display:flex;justify-content:space-between"><span>Total</span><b id="total">₹0</b></div><button onclick="checkout()" style="background:#ff9900;color:#fff;border:0;width:100%;padding:12px;border-radius:8px;font-weight:800;margin-top:10px">Checkout on Amazon (Payment)</button><p style="font-size:11px;color:gray;text-align:center;margin-top:6px">UPI • Card • COD • NetBanking<br>Secured by Amazon</p></div></div></div>
+
+<div class="bottom">
+<div class="b-item active"><div>🏠</div>Home</div>
+<div class="b-item" onclick="document.getElementById('s').focus()"><div>🔍</div>Search</div>
+<div class="b-item" onclick="openCart()"><div>🛒</div>Cart</div>
+<div class="b-item" onclick="alert('Login: Hello Rahul! ID shopzone010e-21')"><div>👤</div>Account</div>
+</div>
 
 <script>
 const TAG="shopzone010e-21";
 const pro=[
-{name:"Wireless Earbuds Pro",cat:"earbuds",price:"₹799",img:"https://m.media-amazon.com/images/I/71k3gO6yyKL._SX679_.jpg",k:"wireless+earbuds"},
-{name:"Smart Watch BT Calling",cat:"watch",price:"₹1799",img:"https://m.media-amazon.com/images/I/61ActU9NS0L._SX679_.jpg",k:"smartwatch"},
-{name:"Lenovo IdeaPad Laptop",cat:"laptop",price:"₹38990",img:"https://m.media-amazon.com/images/I/71e9V2k2RXL._SX679_.jpg",k:"laptop"},
-{name:"Mi Power Bank 20000mAh",cat:"power",price:"₹1999",img:"https://m.media-amazon.com/images/I/71lVwl3q-kL._SX679_.jpg",k:"power+bank"},
-{name:"JBL Speaker Bass",cat:"power",price:"₹1299",img:"https://m.media-amazon.com/images/I/71o8Q5XJS5L._SX679_.jpg",k:"bluetooth+speaker"},
-{name:"Redmi Note 13 Pro",cat:"mobile",price:"₹24999",img:"https://m.media-amazon.com/images/I/71CXhVhpM0L._SX679_.jpg",k:"mobile+phone"}
+{id:1,name:"boAt Airdopes 121 PRO Earbuds",cat:"earbuds",price:799,mrp:2990,img:"https://m.media-amazon.com/images/I/71k3gO6yyKL._SL1500_.jpg",kw:"boat+earbuds"},
+{id:2,name:"Fire-Boltt Ninja Call Pro Watch",cat:"watch",price:1799,mrp:7999,img:"https://m.media-amazon.com/images/I/61ActU9NS0L._SL1500_.jpg",kw:"smart+watch"},
+{id:3,name:"HP 15s i5 12th Gen Laptop 16GB",cat:"laptop",price:38990,mrp:65000,img:"https://m.media-amazon.com/images/I/71e9V2k2RXL._SL1500_.jpg",kw:"hp+laptop"},
+{id:4,name:"Redmi Note 13 Pro 5G",cat:"mobile",price:24999,mrp:32999,img:"https://m.media-amazon.com/images/I/71CXhVhpM0L._SL1500_.jpg",kw:"redmi+note+13"},
+{id:5,name:"JBL Go 3 Speaker Extra Bass",cat:"earbuds",price:2899,mrp:3999,img:"https://m.media-amazon.com/images/I/71o8Q5XJS5L._SL1500_.jpg",kw:"jbl+speaker"},
+{id:6,name:"Mi Power Bank 20000mAh",cat:"mobile",price:1999,mrp:3499,img:"https://m.media-amazon.com/images/I/71lVwl3q-kL._SL1500_.jpg",kw:"power+bank"}
 ];
-function render(list){document.getElementById('grid').innerHTML=list.map(p=>`<div class="card"><img src="${p.img}"><div class="body"><h3>${p.name}</h3><div class="price">${p.price}</div><a class="btn" href="https://www.amazon.in/s?k=${p.k}&tag=${TAG}" target="_blank">Buy on Amazon</a></div></div>`).join('')}
-function search(){let q=document.getElementById('s').value.toLowerCase();let f=pro.filter(p=>p.name.toLowerCase().includes(q)||p.cat.includes(q));render(f.length?f:pro)}
-function filt(c){if(c=='all'){render(pro);return;}document.getElementById('s').value=c;search()}
-function openL(){document.getElementById('m').style.display='flex'}
-function closeL(){document.getElementById('m').style.display='none'}
-function login(){let name=document.getElementById('n').value;if(name){document.getElementById('hi').innerText="Hello, "+name;localStorage.setItem('sz',name)}closeL()}
-render(pro);
-let saved=localStorage.getItem('sz');if(saved)document.getElementById('hi').innerText="Hello, "+saved;
-document.getElementById('s').addEventListener('input',search)
-</script>
-</body>
-</html>
-{
-  "name": "amazon-backend",
-  "version": "1.0.0",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.19.2"
-  }
+let cart=JSON.parse(localStorage.getItem('sz_cart')||'[]');
+let cur=null, deferredPrompt=null;
+function render(list){
+document.getElementById('grid').innerHTML=list.map(p=>`<div class="card" onclick="openD(${p.id})"><img src="${p.img}"><div style="background:#cc0c39;color:#fff;font-size:10px;display:inline-block;padding:2px 6px;border-radius:4px">50% OFF</div><h4>${p.name}</h4><div><span class="price">₹${p.price}</span> <span style="font-size:11px;color:gray;text-decoration:line-through">₹${p.mrp}</span></div><button class="btn">View Product</button></div>`).join('');
 }
-const express = require('express');
-const cors = require('cors');
-
-const app = express();
-const PORT = 5000;
-
-// Middlewares
-app.use(cors()); // Isse Frontend server se connect ho payega
-app.use(express.json());
-
-// Dummy Database (Products data)
-let products = [
-  { id: 1, name: "Premium Wireless Headphones", price: 2999, category: "Electronics", rating: 4.5, image: "https://unsplash.com" },
-  { id: 2, name: "Minimalist Smart Watch", price: 4499, category: "Electronics", rating: 4.2, image: "https://unsplash.com" },
-  { id: 3, name: "Ergonomic Gaming Mouse", price: 1249, category: "Accessories", rating: 4.7, image: "https://unsplash.com" },
-  { id: 4, name: "Leather Travel Backpack", price: 3499, category: "Fashion", rating: 4.4, image: "https://unsplash.com" }
-];
-
-// Routes / APIs
-// 1. Get All Products (Amazon product feed)
-app.get('/api/products', (req, res) => {
-  res.status(200).json(products);
-});
-
-// 2. Checkout Endpoint (Order placing simulation)
-app.post('/api/checkout', (req, res) => {
-  const { cartItems, totalAmount } = req.body;
-  
-  if (!cartItems || cartItems.length === 0) {
-    return res.status(400).json({ success: false, message: "Cart is empty" });
-  }
-
-  console.log(`New Order Received! Total items: ${cartItems.length}, Total Paid: ₹${totalAmount}`);
-  
-  // Real app mein yahan payment processing aur database entry hoti hai
-  res.status(200).json({ 
-    success: true, 
-    message: "Order placed successfully! Thank you for shopping with MyAmazon.",
-    orderId: "AMZ" + Math.floor(Math.random() * 900000 + 100000)
-  });
-});
-
-app.listen(PORT, () => {
-  console.log(`Backend server running on http://localhost:${PORT}`);
-});
-import React, { useState, useEffect } from 'react';
-import './App.css';
-
-function App() {
-  const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
-  const [viewingCart, setViewingCart] = useState(false);
-
-  // Server se products load karna
-  useEffect(() => {
-    fetch('http://localhost:5000/api/products')
-      .then(res => res.json())
-      .then(data => setProducts(data))
-      .catch(err => console.error("Error fetching data:", err));
-  }, []);
-
-  // Cart operations
-  const addToCart = (product) => {
-    setCart([...cart, product]);
-  };
-
-  const removeFromCart = (indexId) => {
-    setCart(cart.filter((_, index) => index !== indexId));
-  };
-
-  const totalAmount = cart.reduce((sum, item) => sum + item.price, 0);
-
-  // Order place karne ka function
-  const handleCheckout = () => {
-    fetch('http://localhost:5000/api/checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ cartItems: cart, totalAmount: totalAmount })
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        alert(`${data.message}\nYour Order ID is: ${data.orderId}`);
-        setCart([]); // Clear cart after success
-        setViewingCart(false);
-      }
-    })
-    .catch(err => alert("Checkout failed!"));
-  };
-
-  return (
-    <div className="amazon-app">
-      {/* Navbar Section */}
-      <nav className="navbar">
-        <div className="nav-logo" onClick={() => setViewingCart(false)}>MyAmazon</div>
-        <div className="nav-search">
-          <input type="text" placeholder="Search items, brands, and mechanics..." />
-          <button>🔍</button>
-        </div>
-        <div className="nav-cart" onClick={() => setViewingCart(!viewingCart)}>
-          <span className="cart-icon">🛒</span>
-          <span className="cart-count">{cart.length}</span>
-        </div>
-      </nav>
-
-      {/* Main Content View */}
-      <main className="main-content">
-        {!viewingCart ? (
-          <div>
-            <h2 className="section-title">Trending Products</h2>
-            <div className="product-grid">
-              {products.map(product => (
-                <div key={product.id} className="product-card">
-                  <img src={product.image} alt={product.name} />
-                  <div className="product-info">
-                    <h3>{product.name}</h3>
-                    <p className="rating">⭐ {product.rating}</p>
-                    <p className="price">₹{product.price}</p>
-                    <button onClick={() => addToCart(product)}>Add to Cart</button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="cart-page">
-            <h2>Shopping Cart</h2>
-            {cart.length === 0 ? <p>Your cart is empty.</p> : (
-              <div className="cart-layout">
-                <div className="cart-items">
-                  {cart.map((item, index) => (
-                    <div key={index} className="cart-item">
-                      <img src={item.image} alt={item.name} />
-                      <div>
-                        <h4>{item.name}</h4>
-                        <p>₹{item.price}</p>
-                        <button className="remove-btn" onClick={() => removeFromCart(index)}>Delete</button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="subtotal-box">
-                  <h3>Subtotal ({cart.length} items): <strong>₹{totalAmount}</strong></h3>
-                  <button onClick={handleCheckout} className="checkout-btn">Proceed to Buy</button>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-      </main>
-    </div>
-  );
-}
-
-export default App;body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #eaeded;
-}
-
-/* Navbar */
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #131921;
-  padding: 10px 30px;
-  color: white;
-}
-.nav-logo {
-  font-size: 24px;
-  font-weight: bold;
-  color: #ff9900;
-  cursor: pointer;
-}
-.nav-search {
-  display: flex;
-  flex: 0.6;
-}
-.nav-search input {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 4px 0px 0px 4px;
-}
-.nav-search button {
-  background-color: #febd69;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 0px 4px 4px 0px;
-  cursor: pointer;
-}
-
-/* Cart Button */
-.nav-cart {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-.cart-icon { font-size: 25px; }
-.cart-count {
-  background-color: #ff9900;
-  color: black;
-  font-weight: bold;
-  border-radius: 50%;
-  padding: 2px 8px;
-  margin-left: 5px;
-}
-
-/* Product Section */
-.main-content { padding: 20px; }
-.section-title { margin-bottom: 20px; }
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-}
-.product-card {
-  background-color: white;
-  border-radius: 4px;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.product-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: contain;
-}
-.product-info h3 { font-size: 16px; margin: 10px 0; }
-.price { font-size: 18px; font-weight: bold; color: #b12704; }
-.rating { color: #ffa41c; }
-.product-info button {
-  background-color: #ffd814;
-  border: 1px solid #fcd200;
-  border-radius: 20px;
-  padding: 8px;
-  width: 100%;
-  cursor: pointer;
-}
-
-/* Cart Page styles */
-.cart-layout { display: flex; gap: 40px; }
-.cart-items { flex: 0.7; }
-.cart-item {
-  display: flex;
-  background: white;
-  padding: 15px;
-  margin-bottom: 10px;
-  gap: 20px;
-}
-.cart-item img { width: 100px; height: 100px; object-fit: contain; }
-.remove-btn { color: #007185; background: none; border: none; cursor: pointer; padding: 0; }
-.subtotal-box {
-  flex: 0.3;
-  background: white;
-  padding: 20px;
-  height: fit-content;
-}
-.checkout-btn {
-  background-color: #ffd814;
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #fcd200;
-  cursor: pointer;
-  font-weight: bold;
-}
-
+function openD(id){
+cur=pro.find(x=>x.id===id);
+document.getElementById('detail').innerHTML

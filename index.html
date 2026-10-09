@@ -2,232 +2,68 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ShopZone - Best Amazon Deals</title>
+<title>ShopZone - Rahul Sharma</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#eaeded}
-.top-nav{background:#131921;color:white;padding:12px;display:flex;gap:10px;align-items:center;position:sticky;top:0;z-index:99}
-.logo{font-weight:900;font-size:22px}
-.logo span:last-child{color:#febd69}
-.search-box{flex:1;display:flex;background:white;border-radius:4px;overflow:hidden;max-width:700px}
-.search-box input{flex:1;padding:10px;border:none;outline:none}
-.search-box button{background:#febd69;border:none;padding:0 15px}
-.cat-bar{background:#232f3e;color:white;display:flex;gap:12px;padding:8px 12px;overflow-x:auto;font-size:13px}
-.hero{background:linear-gradient(90deg,#ff9900,#ff5e00);color:white;text-align:center;padding:20px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;padding:12px;max-width:1100px;margin:auto}
-.card{background:white;border-radius:8px;overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,.1)}
-.card img{width:100%;height:130px;object-fit:contain;padding:8px}
-.card-body{padding:10px}
-.card h3{font-size:13px;height:36px;overflow:hidden}
-.price{color:#B12704;font-weight:700}
-.badge{background:#cc0c39;color:white;font-size:10px;padding:2px 5px;border-radius:3px;display:inline-block;margin-bottom:4px}
-.btn{background:#ffd814;border:none;border-radius:20px;padding:7px;width:100%;margin-top:8px;font-weight:600;display:block;text-align:center;text-decoration:none;color:black;font-size:12px}
-.footer{background:#131921;color:#aaa;text-align:center;padding:15px;font-size:12px;margin-top:20px}
-</style>
-</head>
-<body>
-<div class="top-nav"><div class="logo"><span>Shop</span><span style="color:#febd69">Zone</span></div>
-<div class="search-box"><input id="searchInput" type="text" placeholder="Search on ShopZone"><button onclick="doSearch()">🔍</button></div></div>
-<div class="cat-bar"><span onclick="filterCat('all')">All</span><span onclick="filterCat('earbuds')">Earbuds</span><span onclick="filterCat('watch')">Watch</span><span onclick="filterCat('laptop')">Laptop</span><span onclick="filterCat('mobile')">Mobile</span></div>
-<div class="hero"><h1>Mega Sale Up to 50% Off 🔥</h1><p>ID: shopzone010e-21 - Best Deals by Rahul</p></div>
-<div class="grid" id="grid"></div>
-<div class="footer">© 2026 ShopZone | Associate ID: shopzone010e-21 | We earn from qualifying purchases</div>
-<script>
-const TAG="shopzone010e-21";
-const products=[
-{name:"Wireless Earbuds Pro",cat:"earbuds",price:"₹799",img:"https://m.media-amazon.com/images/I/71k3gO6yyKL._SX679_.jpg",kw:"wireless+earbuds"},
-{name:"Smart Watch BT Calling",cat:"watch",price:"₹1,799",img:"https://m.media-amazon.com/images/I/61ActU9NS0L._SX679_.jpg",kw:"smart+watch"},
-{name:"Lenovo Laptop Slim",cat:"laptop",price:"₹38,990",img:"https://m.media-amazon.com/images/I/71e9V2k2RXL._SX679_.jpg",kw:"laptop"},
-{name:"Mi Power Bank 20000mAh",cat:"powerbank",price:"₹1,999",img:"https://m.media-amazon.com/images/I/71lVwl3q-kL._SX679_.jpg",kw:"power+bank"},
-{name:"Bluetooth Speaker",cat:"speaker",price:"₹1,299",img:"https://m.media-amazon.com/images/I/71o8Q5XJS5L._SX679_.jpg",kw:"bluetooth+speaker"},
-{name:"Redmi Note 13 Pro",cat:"mobile",price:"₹24,999",img:"https://m.media-amazon.com/images/I/71CXhVhpM0L._SX679_.jpg",kw:"mobile+phone"}
-];
-function render(list){
-document.getElementById('grid').innerHTML=list.map(p=>`<div class="card"><img src="${p.img}"><div class="card-body"><div class="badge">Deal</div><h3>${p.name}</h3><div class="price">${p.price}</div><a class="btn" href="https://www.amazon.in/s?k=${p.kw}&tag=${TAG}" target="_blank">Buy on Amazon</a></div></div>`).join('');
-}
-function doSearch(){let q=document.getElementById('searchInput').value.toLowerCase();let f=products.filter(p=>p.name.toLowerCase().includes(q)||p.cat.includes(q));render(f.length?f:products);}
-function filterCat(c){if(c=='all'){render(products);return;}document.getElementById('searchInput').value=c;doSearch();}
-document.getElementById('searchInput').addEventListener('input',doSearch);
-render(products);
-</script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ShopZone - Amazon Best Deals</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#eaeded}
-.top-nav{background:#131921;color:white;padding:12px;display:flex;gap:10px;align-items:center;position:sticky;top:0;z-index:99}
-.logo{font-weight:900;font-size:22px;white-space:nowrap}
-.logo span:last-child{color:#febd69}
-.search-box{flex:1;display:flex;background:white;border-radius:4px;overflow:hidden;max-width:700px}
-.search-box input{flex:1;padding:10px;border:none;outline:none}
-.search-box button{background:#febd69;border:none;padding:0 15px}
-.cat-bar{background:#232f3e;color:white;display:flex;gap:12px;padding:8px 12px;overflow-x:auto;font-size:13px}
-.cat-bar span{cursor:pointer;white-space:nowrap}
-.hero{background:linear-gradient(90deg,#ff9900,#ff5e00);color:white;text-align:center;padding:20px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;padding:12px;max-width:1100px;margin:auto}
-.card{background:white;border-radius:8px;overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,.1)}
-.card img{width:100%;height:130px;object-fit:contain;padding:8px}
-.card-body{padding:10px}
-.card h3{font-size:13px;height:34px;overflow:hidden}
+.top{background:#131921;color:white;padding:10px 12px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:99}
+.logo{font-weight:900;font-size:22px;flex-shrink:0}
+.logo b{color:#febd69}
+.search{flex:1;display:flex;background:white;border-radius:4px;overflow:hidden;max-width:600px}
+.search input{flex:1;padding:10px;border:0;outline:0}
+.search button{background:#febd69;border:0;padding:0 12px}
+.right{display:flex;align-items:center;gap:10px;font-size:13px}
+.login{background:#febd69;color:#000;padding:6px 12px;border-radius:4px;font-weight:700;cursor:pointer}
+.cat{background:#232f3e;color:white;display:flex;gap:14px;padding:8px 12px;font-size:13px;overflow:auto}
+.cat span{cursor:pointer;white-space:nowrap}
+.banner{background:linear-gradient(90deg,#ff9900,#ff6200);color:white;text-align:center;padding:22px 12px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:12px;max-width:1000px;margin:auto}
+@media(min-width:600px){.grid{grid-template-columns:repeat(4,1fr)}}
+.card{background:white;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+.card img{width:100%;height:135px;object-fit:contain;padding:8px;background:white}
+.body{padding:10px}
+.body h3{font-size:13px;height:32px;overflow:hidden}
 .price{color:#B12704;font-weight:700;margin-top:4px}
-.badge{background:#cc0c39;color:white;font-size:10px;padding:2px 5px;border-radius:3px;display:inline-block;margin-bottom:4px}
-.btn{background:#ffd814;border:none;border-radius:20px;padding:7px;width:100%;margin-top:8px;font-weight:600;display:block;text-align:center;text-decoration:none;color:black;font-size:12px}
-.footer{background:#131921;color:#aaa;text-align:center;padding:15px;font-size:12px;margin-top:20px}
+.btn{background:#ffd814;display:block;text-align:center;padding:8px;border-radius:20px;margin-top:8px;text-decoration:none;color:#000;font-size:12px;font-weight:700}
+.footer{background:#131921;color:#999;text-align:center;padding:16px;font-size:12px;margin-top:15px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999;justify-content:center;align-items:center}
+.box{background:white;padding:20px;border-radius:8px;width:90%;max-width:320px}
+.box input{width:100%;padding:10px;margin:6px 0;border:1px solid #ccc;border-radius:4px}
+.box button{width:100%;padding:10px;background:#febd69;border:0;border-radius:4px;font-weight:700;margin-top:8px}
 </style>
 </head>
 <body>
-<div class="top-nav">
-<div class="logo"><span>Shop</span><span>Zone</span></div>
-<div class="search-box">
-<input id="searchInput" type="text" placeholder="Search on ShopZone">
-<button onclick="doSearch()">🔍</button>
+<div class="top">
+<div class="logo">Shop<span><b>Zone</b></span></div>
+<div class="search"><input id="s" placeholder="Search on ShopZone"><button onclick="search()">🔍</button></div>
+<div class="right"><span id="hi">Hello</span><div class="login" onclick="openL()">Login</div></div>
 </div>
-</div>
-<div class="cat-bar">
-<span onclick="filterCat('all')">All</span>
-<span onclick="filterCat('earbuds')">Earbuds</span>
-<span onclick="filterCat('watch')">Watch</span>
-<span onclick="filterCat('laptop')">Laptop</span>
-<span onclick="filterCat('powerbank')">PowerBank</span>
-<span onclick="filterCat('speaker')">Speaker</span>
-<span onclick="filterCat('mobile')">Mobile</span>
-</div>
-<div class="hero">
-<h1>Mega Sale Up to 50% Off 🔥</h1>
-<p>Best Amazon Deals - Handpicked by Rahul</p>
-</div>
+<div class="cat"><span onclick="filt('all')">All</span><span onclick="filt('earbuds')">Earbuds</span><span onclick="filt('watch')">Watch</span><span onclick="filt('laptop')">Laptop</span><span onclick="filt('power')">PowerBank</span></div>
+<div class="banner"><h2>Mega Sale Up to 50% Off 🔥</h2><p>Best Amazon Deals - Handpicked by Rahul - ID: shopzone010e-21</p></div>
 <div class="grid" id="grid"></div>
-<div id="noResult" style="text-align:center;padding:30px;background:white;margin:12px;display:none">No result found</div>
-<div class="footer">© 2026 ShopZone by Rahul Sharma | Amazon Associate - We earn from qualifying purchases</div>
-<script>
-const products=[
-{name:"Wireless Earbuds Pro with Mic",cat:"earbuds",price:"₹799",img:"https://m.media-amazon.com/images/I/71k3gO6yyKL._SX679_.jpg",link:"https://www.amazon.in/s?k=earbuds"},
-{name:"Smart Watch for Men BT Calling",cat:"watch",price:"₹1,799",img:"https://m.media-amazon.com/images/I/61ActU9NS0L._SX679_.jpg",link:"https://www.amazon.in/s?k=smart+watch"},
-{name:"Lenovo IdeaPad Laptop 14",cat:"laptop",price:"₹38,990",img:"https://m.media-amazon.com/images/I/71e9V2k2RXL._SX679_.jpg",link:"https://www.amazon.in/s?k=laptop"},
-{name:"Mi Power Bank 20000mAh",cat:"powerbank",price:"₹1,999",img:"https://m.media-amazon.com/images/I/71lVwl3q-kL._SX679_.jpg",link:"https://www.amazon.in/s?k=power+bank"},
-{name:"Bluetooth Speaker Extra Bass",cat:"speaker",price:"₹1,299",img:"https://m.media-amazon.com/images/I/71o8Q5XJS5L._SX679_.jpg",link:"https://www.amazon.in/s?k=bluetooth+speaker"},
-{name:"Redmi Note 13 Pro Mobile",cat:"mobile",price:"₹24,999",img:"https://m.media-amazon.com/images/I/71CXhVhpM0L._SX679_.jpg",link:"https://www.amazon.in/s?k=mobile"},
-{name:"Noise Air Buds 2",cat:"earbuds",price:"₹1,199",img:"https://m.media-amazon.com/images/I/51Q8QWekfVL._SX679_.jpg",link:"https://www.amazon.in/s?k=noise+earbuds"},
-{name:"Fire-Boltt Ninja Watch",cat:"watch",price:"₹1,499",img:"https://m.media-amazon.com/images/I/61eA9PkZ07L._SX679_.jpg",link:"https://www.amazon.in/s?k=fire+boltt"}
-];
-function render(list){
-document.getElementById('grid').innerHTML=list.map(p=>`
-<div class="card">
-<img src="${p.img}">
-<div class="card-body">
-<div class="badge">Great Deal</div>
-<h3>${p.name}</h3>
-<div class="price">${p.price}</div>
-<a class="btn" href="${p.link}" target="_blank">Buy on Amazon</a>
-</div>
-</div>`).join('');
-}
-function doSearch(){
-let q=document.getElementById('searchInput').value.toLowerCase();
-let f=products.filter(p=>p.name.toLowerCase().includes(q)||p.cat.includes(q));
-if(f.length==0){document.getElementById('grid').innerHTML='';document.getElementById('noResult').style.display='block';}
-else{document.getElementById('noResult').style.display='none';render(f);}
-}
-function filterCat(c){
-if(c=='all'){render(products);document.getElementById('searchInput').value='';document.getElementById('noResult').style.display='none';return;}
-document.getElementById('searchInput').value=c;
-doSearch();
-}
-document.getElementById('searchInput').addEventListener('input',doSearch);
-render(products);
-</script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ShopZone - Login Added</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#eaeded}
-.top-nav{background:#131921;color:white;padding:10px 12px;display:flex;gap:10px;align-items:center;position:sticky;top:0;z-index:99;justify-content:space-between}
-.logo{font-weight:900;font-size:22px}
-.logo span:last-child{color:#febd69}
-.search-box{flex:1;display:flex;background:white;border-radius:4px;overflow:hidden;max-width:500px;margin:0 10px}
-.search-box input{flex:1;padding:9px;border:none;outline:none}
-.search-box button{background:#febd69;border:none;padding:0 12px;cursor:pointer}
-.nav-right{display:flex;gap:12px;align-items:center;font-size:13px;white-space:nowrap}
-.nav-right span{cursor:pointer}
-.login-btn{background:#febd69;color:#131921;padding:6px 12px;border-radius:4px;font-weight:700;cursor:pointer}
-.cat-bar{background:#232f3e;color:white;display:flex;gap:12px;padding:8px 12px;overflow-x:auto;font-size:13px}
-.hero{background:linear-gradient(90deg,#ff9900,#ff5e00);color:white;text-align:center;padding:18px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;padding:12px;max-width:1100px;margin:auto}
-.card{background:white;border-radius:8px;overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,.1)}
-.card img{width:100%;height:130px;object-fit:contain;padding:8px}
-.card-body{padding:10px}
-.card h3{font-size:13px;height:36px;overflow:hidden}
-.price{color:#B12704;font-weight:700}
-.btn{background:#ffd814;border-radius:20px;padding:7px;width:100%;margin-top:8px;font-weight:600;display:block;text-align:center;text-decoration:none;color:black;font-size:12px}
-.footer{background:#131921;color:#aaa;text-align:center;padding:15px;font-size:12px;margin-top:20px}
+<div class="footer">© 2026 ShopZone by Rahul Sharma | Tag: shopzone010e-21 | We earn from qualifying purchases<br>💳 Payment Secured by Amazon | UPI | Card | COD</div>
 
-/* Login Popup */
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:200;justify-content:center;align-items:center}
-.modal-content{background:white;padding:25px;border-radius:8px;width:90%;max-width:350px}
-.modal-content h2{margin-bottom:15px;font-size:18px}
-.modal-content input{width:100%;padding:10px;margin:8px 0;border:1px solid #ccc;border-radius:4px}
-.modal-content button{width:100%;padding:10px;background:#febd69;border:none;border-radius:4px;font-weight:700;margin-top:10px;cursor:pointer}
-.close{float:right;font-size:20px;cursor:pointer}
-</style>
-</head>
-<body>
-<div class="top-nav">
-<div class="logo"><span>Shop</span><span style="color:#febd69">Zone</span></div>
-<div class="search-box"><input id="searchInput" type="text" placeholder="Search on ShopZone"><button>🔍</button></div>
-<div class="nav-right">
-<span id="userName">Hello, Guest</span>
-<div class="login-btn" onclick="openLogin()">Login</div>
-</div>
-</div>
-
-<div class="cat-bar">
-<span>All</span><span>Earbuds</span><span>Watch</span><span>Laptop</span>
-</div>
-
-<div class="hero"><h1>Welcome to ShopZone 🔥</h1><p>Login karke best deals pao - ID: shopzone010e-21</p></div>
-
-<div class="grid" id="grid"></div>
-
-<!-- LOGIN MODAL -->
-<div class="modal" id="loginModal">
-<div class="modal-content">
-<span class="close" onclick="closeLogin()">&times;</span>
-<h2>Login to ShopZone</h2>
-<input id="nameInput" type="text" placeholder="Apna naam likho">
-<input type="email" placeholder="Email (optional)">
-<input type="password" placeholder="Password (optional)">
-<button onclick="doLogin()">Login</button>
-<p style="font-size:11px;margin-top:10px;color:gray;text-align:center">*Ye demo login hai, Amazon pe kharidne ke liye Amazon login lagega</p>
-</div>
-</div>
-
-<div class="footer">© 2026 ShopZone | ID: shopzone010e-21</div>
+<div class="modal" id="m"><div class="box"><div style="float:right;cursor:pointer" onclick="closeL()">X</div><h3>Login to ShopZone</h3><input id="n" placeholder="Apna Naam"><button onclick="login()">Login</button><p style="font-size:10px;color:gray;margin-top:8px">Demo login hai. Payment Amazon pe hoga.</p></div></div>
 
 <script>
 const TAG="shopzone010e-21";
-const products=[
-{name:"Wireless Earbuds Pro",price:"₹799",img:"https://m.media-amazon.com/images/I/71k3gO6yyKL._SX679_.jpg",kw:"earbuds"},
-{name:"Smart Watch BT Calling",price:"₹1,799",img:"https://m.media-amazon.com/images/I/61ActU9NS0L._SX679_.jpg",kw:"smart+watch"},
-{name:"Lenovo Laptop",price:"₹38,990",img:"https://m.media-amazon.com/images/I/71e9V2k2RXL._SX679_.jpg",kw:"laptop"},
-{name:"Mi Power Bank",price:"₹1,999",img:"https://m.media-amazon.com/images/I/71lVwl3q-kL._SX679_.jpg",kw:"power+bank"},
-{name:"Bluetooth Speaker",price:"₹1,299",img:"https://m.media-amazon.com/images/I/71o8Q5XJS5L._SX679_.jpg",kw:"speaker"},
-{name:"Redmi Mobile",price:"₹24,999",img:"https://m.media-amazon.com/images/I/71CXhVhpM0L._SX679_.jpg",kw:"mobile"}
+const pro=[
+{name:"Wireless Earbuds Pro",cat:"earbuds",price:"₹799",img:"https://m.media-amazon.com/images/I/71k3gO6yyKL._SX679_.jpg",k:"wireless+earbuds"},
+{name:"Smart Watch BT Calling",cat:"watch",price:"₹1799",img:"https://m.media-amazon.com/images/I/61ActU9NS0L._SX679_.jpg",k:"smartwatch"},
+{name:"Lenovo IdeaPad Laptop",cat:"laptop",price:"₹38990",img:"https://m.media-amazon.com/images/I/71e9V2k2RXL._SX679_.jpg",k:"laptop"},
+{name:"Mi Power Bank 20000mAh",cat:"power",price:"₹1999",img:"https://m.media-amazon.com/images/I/71lVwl3q-kL._SX679_.jpg",k:"power+bank"},
+{name:"JBL Speaker Bass",cat:"power",price:"₹1299",img:"https://m.media-amazon.com/images/I/71o8Q5XJS5L._SX679_.jpg",k:"bluetooth+speaker"},
+{name:"Redmi Note 13 Pro",cat:"mobile",price:"₹24999",img:"https://m.media-amazon.com/images/I/71CXhVhpM0L._SX679_.jpg",k:"mobile+phone"}
 ];
-function render(){document.getElementById('grid').innerHTML=products.map(p=>`<div class="card"><img src="${p.img}"><div class="card-body"><h3>${p.name}</h3><div class="price">${p.price}</div><a class="btn" href="https://www.amazon.in/s?k=${p.kw}&tag=${TAG}" target="_blank">Buy on Amazon</a></div></div>`).join('');}
-function openLogin(){document.getElementById('loginModal').style.display='flex';}
-function closeLogin(){document.getElementById('loginModal').style.display='none';}
-function doLogin(){let n=document.getElementById('nameInput').value;if(n){document.getElementById('userName').innerText="Hello, "+n;localStorage.setItem('shopzone_user',n);}closeLogin();alert("Welcome "+n+"! Ab aap ShopZone pe login ho!");}
-render();
-let saved=localStorage.getItem('shopzone_user');if(saved){document.getElementById('userName').innerText="Hello, "+saved;}
+function render(list){document.getElementById('grid').innerHTML=list.map(p=>`<div class="card"><img src="${p.img}"><div class="body"><h3>${p.name}</h3><div class="price">${p.price}</div><a class="btn" href="https://www.amazon.in/s?k=${p.k}&tag=${TAG}" target="_blank">Buy on Amazon</a></div></div>`).join('')}
+function search(){let q=document.getElementById('s').value.toLowerCase();let f=pro.filter(p=>p.name.toLowerCase().includes(q)||p.cat.includes(q));render(f.length?f:pro)}
+function filt(c){if(c=='all'){render(pro);return;}document.getElementById('s').value=c;search()}
+function openL(){document.getElementById('m').style.display='flex'}
+function closeL(){document.getElementById('m').style.display='none'}
+function login(){let name=document.getElementById('n').value;if(name){document.getElementById('hi').innerText="Hello, "+name;localStorage.setItem('sz',name)}closeL()}
+render(pro);
+let saved=localStorage.getItem('sz');if(saved)document.getElementById('hi').innerText="Hello, "+saved;
+document.getElementById('s').addEventListener('input',search)
 </script>
 </body>
 </html>

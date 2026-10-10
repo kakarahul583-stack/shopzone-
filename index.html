@@ -1,92 +1,72 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ShopZone - Amazon Full System</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#eaeded}
-.top{background:#131921;color:#fff;padding:12px;display:flex;gap:8px;align-items:center;position:sticky;top:0;z-index:99}
-.logo{font-weight:900;font-size:20px} .logo span{color:#febd69}
-.sbox{flex:1;background:#fff;display:flex;border-radius:4px;overflow:hidden;height:40px}
-.sbox input{flex:1;border:0;padding:0 10px;outline:0}
-.sbox button{background:#febd69;border:0;padding:0 12px}
-.card{background:#fff;padding:10px;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,.1)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
-@media(min-width:800px){.grid{grid-template-columns:repeat(4,1fr);max-width:1200px;margin:auto}}
-.btn{width:100%;padding:9px;border:0;border-radius:20px;font-weight:700;margin-top:5px;cursor:pointer}
-.y{background:#ffd814} .o{background:#ff9900;color:#fff}
-.page{display:none;max-width:1200px;margin:auto;padding:10px} .page.active{display:block}
-.badge{background:#cc0c39;color:#fff;font-size:10px;padding:2px 6px;border-radius:3px}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;justify-content:center;align-items:center;z-index:100}
-.modal.on{display:flex}
-.mbox{background:#fff;width:92%;max-width:400px;padding:20px;border-radius:10px}
-.mbox input{width:100%;padding:10px;margin:6px 0;border:1px solid #ccc;border-radius:6px}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:8px 0;border-top:1px solid #ddd}
-</style>
-</head>
-<body>
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const app = express();
 
-<div class="top">
-<div class="logo">Shop<span>Zone</span></div>
-<div class="sbox"><input id="search" placeholder="Search Amazon Products..."><button>🔍</button></div>
-<div onclick="openPage('cart')">🛒<span id="cc">0</span></div>
-<div onclick="openPage('account')">👤</div>
-</div>
+app.use(cors());
+app.use(express.json());
 
-<div id="home" class="page active">
-<div style="background:#fff;padding:10px;border-radius:8px;margin-bottom:10px">🔥 <b>Full Amazon System</b> | ID: shopzone010e-21 | Admin Code: rahul123</div>
-<div class="grid" id="products"></div>
-</div>
+// Rahul ka Final MongoDB Link
+const MONGO_URL = "mongodb+srv://kakarahul583_db_user:A7ytd1q4s2yZRA5t@cluster0.vselkat.mongodb.net/shopzone?appName=Cluster0";
 
-<div id="cart" class="page"><h3>Shopping Cart</h3><div id="cartItems" style="margin-top:10px"></div><h3 id="total" style="margin-top:10px">Total: ₹0</h3><button class="btn o" onclick="checkout()">Proceed to Buy on Amazon</button><p style="font-size:11px;color:gray;text-align:center">Payment: UPI | Card | COD - Secured by Amazon</p></div>
+mongoose.connect(MONGO_URL)
+  .then(()=> console.log('MongoDB Connected ✅'))
+  .catch(e=> console.log('DB Error:', e.message));
 
-<div id="account" class="page"><div class="card"><h3 id="uname">Hello, Guest</h3><button class="btn y" onclick="showModal('login')">Login</button><button class="btn" style="background:#eee" onclick="showModal('admin')">Admin Panel</button><h4 style="margin-top:15px">My Orders</h4><div id="orders"></div></div></div>
+const OrderSchema = new mongoose.Schema({
+  customerName: String,
+  customerPhone: String,
+  address: String,
+  products: Array,
+  total: Number,
+  date: { type: Date, default: Date.now }
+});
 
-<div class="modal" id="login"><div class="mbox"><h3>Login</h3><input id="ln" placeholder="Apna Naam"><input id="lm" placeholder="Mobile"><button class="btn o" onclick="login()">Login</button><button class="btn" style="background:#eee" onclick="hideModal('login')">Close</button></div></div>
+const UserSchema = new mongoose.Schema({ 
+  phone: String, 
+  date: { type: Date, default: Date.now } 
+});
 
-<div class="modal" id="admin"><div class="mbox"><h3>Admin Panel</h3><input id="acode" placeholder="Code: rahul123"><div id="aform" style="display:none"><input id="an" placeholder="Product Name"><input id="ap" placeholder="Price"><input id="am" placeholder="MRP"><input id="ai" placeholder="Image Link (https://...)"><input id="ak" placeholder="Amazon Keyword"><button class="btn o" onclick="addP()">Add Product</button></div><button class="btn y" onclick="unlock()">Unlock</button><button class="btn" style="background:#eee" onclick="hideModal('admin')">Close</button></div></div>
+const Order = mongoose.model('Order', OrderSchema);
+const User = mongoose.model('User', UserSchema);
 
-<div class="bottom">
-<div onclick="openPage('home')">🏠<br>Home</div>
-<div onclick="openPage('cart')">🛒<br>Cart</div>
-<div onclick="openPage('account')">👤<br>Account</div>
-<div onclick="alert('ShopZone Full Amazon System')">⚙️<br>System</div>
-</div>
+// User Save API
+app.post('/api/save-user', async (req,res)=>{
+  try{
+    await User.updateOne({phone:req.body.phone}, {phone:req.body.phone}, {upsert:true});
+    res.json({ok:true});
+  }catch(e){ res.json({ok:false, error:e.message}) }
+});
 
-<script>
-const TAG="shopzone010e-21";
-let list=JSON.parse(localStorage.getItem('sz_list'))||[
-{n:"boAt Airdopes 121 PRO",p:799,m:2990,img:"https://m.media-amazon.com/images/I/71k3gO6yyKL._SL1500_.jpg",k:"boat+airdropes"},
-{n:"Fire-Boltt Ninja 3 Watch",p:1799,m:7999,img:"https://m.media-amazon.com/images/I/61ActU9NS0L._SL1500_.jpg",k:"fire+boltt+watch"},
-{n:"HP 15s i5 Laptop",p:38990,m:65000,img:"https://m.media-amazon.com/images/I/71e9V2k2RXL._SL1500_.jpg",k:"hp+laptop"},
-{n:"Redmi Note 13 Pro",p:24999,m:32999,img:"https://m.media-amazon.com/images/I/71CXhVhpM0L._SL1500_.jpg",k:"redmi+note+13"},
-{n:"Mi Power Bank 20000mAh",p:1999,m:3499,img:"https://m.media-amazon.com/images/I/71lVwl3q-kL._SL1500_.jpg",k:"power+bank"},
-{n:"JBL Go 3 Speaker",p:2899,m:3999,img:"https://m.media-amazon.com/images/I/71o8Q5XJS5L._SL1500_.jpg",k:"jbl+speaker"}
-];
-let cart=JSON.parse(localStorage.getItem('sz_cart')||'[]');
-let orders=JSON.parse(localStorage.getItem('sz_orders')||'[]');
-function save(){localStorage.setItem('sz_list',JSON.stringify(list));localStorage.setItem('sz_cart',JSON.stringify(cart));localStorage.setItem('sz_orders',JSON.stringify(orders))}
-function render(){
-document.getElementById('products').innerHTML=list.map((x,i)=>`<div class="card"><img src="${x.img}" style="width:100%;height:120px;object-fit:contain"><div class="badge">50% OFF</div><div style="font-size:13px;height:32px;overflow:hidden;margin:4px 0">${x.n}</div><div><b>₹${x.p}</b> <span style="font-size:11px;color:gray;text-decoration:line-through">₹${x.m}</span></div><button class="btn y" onclick="addCart(${i})">Add to Cart</button><button class="btn o" onclick="buy(${i})">Buy on Amazon</button></div>`).join('');
-document.getElementById('cc').innerText=cart.length;
-document.getElementById('cartItems').innerHTML=cart.map((x,i)=>`<div class="card" style="display:flex;gap:10px;margin-bottom:8px"><img src="${x.img}" style="width:60px;height:60px;object-fit:contain"><div><div style="font-size:13px">${x.n}</div><b>₹${x.p}</b><br><span style="color:red;font-size:12px" onclick="cart.splice(${i},1);save();render()">Remove</span></div></div>`).join('')||'Cart Khali Hai';
-document.getElementById('total').innerText='Total: ₹'+cart.reduce((s,a)=>s+Number(a.p),0);
-document.getElementById('orders').innerHTML=orders.map(o=>`<div style="font-size:13px;border-bottom:1px solid #eee;padding:5px 0">${o.n} - ₹${o.p} - ${o.d}</div>`).join('')||'No Orders';
-let u=localStorage.getItem('sz_user');if(u)document.getElementById('uname').innerText='Hello, '+u;
+// Order Save API
+app.post('/api/place-order', async (req,res)=>{
+  try{
+    const newOrder = await Order.create(req.body);
+    console.log('NEW ORDER:', newOrder);
+    res.json({ok:true, orderId: newOrder._id});
+  }catch(e){ res.json({ok:false, error:e.message}) }
+});
+
+// Saare orders dekhne ke liye
+app.get('/api/all-orders', async (req,res)=>{
+  const orders = await Order.find().sort({date:-1});
+  res.json(orders);
+});
+
+app.get('/', (req,res)=> res.send('ShopZone Backend Live Hai! - Rahul ka DB Connected ✅'));
+
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, ()=> console.log('Server Live on ' + PORT));
+{
+  "name": "shopzone-backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.0.0",
+    "cors": "^2.8.5"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
 }
-function addCart(i){cart.push(list[i]);save();render();alert('Cart me add ho gaya')}
-function buy(i){window.open('https://www.amazon.in/s?k='+list[i].k+'&tag='+TAG,'_blank')}
-function openPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active')}
-function showModal(id){document.getElementById(id).classList.add('on')}
-function hideModal(id){document.getElementById(id).classList.remove('on')}
-function login(){let n=document.getElementById('ln').value;if(!n)return alert('Naam likho');localStorage.setItem('sz_user',n);localStorage.setItem('sz_mob',document.getElementById('lm').value);hideModal('login');render()}
-function unlock(){if(document.getElementById('acode').value==='rahul123'){document.getElementById('aform').style.display='block'}else alert('Galat Code')}
-function addP(){let o={n:document.getElementById('an').value,p:document.getElementById('ap').value,m:document.getElementById('am').value,img:document.getElementById('ai').value,k:document.getElementById('ak').value};if(!o.n||!o.p)return alert('Naam Price likho');list.push(o);save();render();alert('Product Add Ho Gaya');hideModal('admin')}
-function checkout(){if(!cart.length)return alert('Cart Khali Hai');let q=cart.map(c=>c.k).join('+');orders.push(...cart.map(c=>({n:c.n,p:c.p,d:new Date().toLocaleDateString()})));cart=[];save();render();window.open('https://www.amazon.in/s?k='+q+'&tag='+TAG,'_blank');openPage('account')}
-document.getElementById('search').addEventListener('input',e=>{let v=e.target.value.toLowerCase();let f=v?list.filter(x=>x.n.toLowerCase().includes(v)):list;document.getElementById('products').innerHTML=f.map((x,i)=>`<div class="card"><img src="${x.img}" style="width:100%;height:120px;object-fit:contain"><div>${x.n}</div><b>₹${x.p}</b><button class="btn y" onclick="addCart(${list.indexOf(x)})">Add to Cart</button><button class="btn o" onclick="buy(${list.indexOf(x)})">Buy</button></div>`).join('')});
-render();
-</script>
-</body>
-</html>

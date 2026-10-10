@@ -1,94 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ShopZone - Full System</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShopZone - Amazon Full System</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#f2f2f2}
-.header{background:#131921;color:#fff;padding:12px;display:flex;gap:10px;align-items:center;position:sticky;top:0;z-index:10}
-.logo{font-weight:900;font-size:22px}.logo span{color:#febd69}
-.search{flex:1;display:flex;background:#fff;border-radius:6px;overflow:hidden;height:40px}
-.search input{flex:1;border:0;padding:0 10px;outline:0}
-.icon{font-size:22px;position:relative;cursor:pointer}.badge{position:absolute;top:-6px;right:-8px;background:red;color:#fff;font-size:10px;padding:2px 5px;border-radius:10px}
-.page{max-width:1100px;margin:auto;padding:10px;display:none}.page.active{display:block}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px} @media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
-.card{background:#fff;border-radius:10px;padding:10px;box-shadow:0 2px 5px rgba(0,0,0,.1)}
-.card img{width:100%;height:120px;object-fit:contain}
-.btn{width:100%;padding:8px;border:0;border-radius:20px;font-weight:800;margin-top:6px;cursor:pointer}.b1{background:#ffd814}.b2{background:#ff9900;color:#fff}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;justify-content:center;align-items:center;z-index:99}.modal.active{display:flex}
-.box{background:#fff;width:92%;max-width:380px;padding:20px;border-radius:12px;max-height:90vh;overflow:auto}
-.box input,.box select{width:100%;padding:10px;margin:6px 0;border:1px solid #ccc;border-radius:6px}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ddd;display:flex;justify-content:space-around;padding:8px 0}
-.bitem{font-size:11px;text-align:center;cursor:pointer}
+body{background:#eaeded}
+.top{background:#131921;color:#fff;padding:12px;display:flex;gap:8px;align-items:center;position:sticky;top:0;z-index:99}
+.logo{font-weight:900;font-size:20px} .logo span{color:#febd69}
+.sbox{flex:1;background:#fff;display:flex;border-radius:4px;overflow:hidden;height:40px}
+.sbox input{flex:1;border:0;padding:0 10px;outline:0}
+.sbox button{background:#febd69;border:0;padding:0 12px}
+.card{background:#fff;padding:10px;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,.1)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
+@media(min-width:800px){.grid{grid-template-columns:repeat(4,1fr);max-width:1200px;margin:auto}}
+.btn{width:100%;padding:9px;border:0;border-radius:20px;font-weight:700;margin-top:5px;cursor:pointer}
+.y{background:#ffd814} .o{background:#ff9900;color:#fff}
+.page{display:none;max-width:1200px;margin:auto;padding:10px} .page.active{display:block}
+.badge{background:#cc0c39;color:#fff;font-size:10px;padding:2px 6px;border-radius:3px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;justify-content:center;align-items:center;z-index:100}
+.modal.on{display:flex}
+.mbox{background:#fff;width:92%;max-width:400px;padding:20px;border-radius:10px}
+.mbox input{width:100%;padding:10px;margin:6px 0;border:1px solid #ccc;border-radius:6px}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:8px 0;border-top:1px solid #ddd}
 </style>
 </head>
 <body>
-<div class="header">
+
+<div class="top">
 <div class="logo">Shop<span>Zone</span></div>
-<div class="search"><input id="q" placeholder="Search..."></div>
-<div class="icon" onclick="show('wishlist')">❤️<span class="badge" id="wC">0</span></div>
-<div class="icon" onclick="show('cart')">🛒<span class="badge" id="cC">0</span></div>
-<div class="icon" onclick="show('account')">👤</div>
+<div class="sbox"><input id="search" placeholder="Search Amazon Products..."><button>🔍</button></div>
+<div onclick="openPage('cart')">🛒<span id="cc">0</span></div>
+<div onclick="openPage('account')">👤</div>
 </div>
 
 <div id="home" class="page active">
-<div style="background:linear-gradient(90deg,#ff9900,#ff3c00);color:#fff;padding:16px;border-radius:10px;text-align:center;margin-bottom:10px"><h3>ShopZone Full System</h3><p style="font-size:12px">ID: shopzone010e-21 | Admin Code: rahul123</p></div>
-<div id="plist" class="grid"></div>
+<div style="background:#fff;padding:10px;border-radius:8px;margin-bottom:10px">🔥 <b>Full Amazon System</b> | ID: shopzone010e-21 | Admin Code: rahul123</div>
+<div class="grid" id="products"></div>
 </div>
 
-<div id="cart" class="page"><h3>Cart</h3><div id="cartList"></div><div style="margin-top:10px"><b id="cTotal">Total: ₹0</b><button class="btn b2" onclick="openCheckout()">Checkout & Pay</button></div></div>
-<div id="wishlist" class="page"><h3>Wishlist</h3><div id="wishList" class="grid"></div></div>
-<div id="account" class="page"><div style="background:#fff;padding:16px;border-radius:10px"><h3 id="uName">Hello Guest</h3><p id="uInfo" style="font-size:12px;color:gray">Login karo</p><button class="btn b1" onclick="openModal('loginM')">Login / Signup</button><button class="btn" style="background:#eee;margin-top:8px" onclick="openModal('adminM')">Admin Panel</button><div style="margin-top:15px"><h4>My Orders</h4><div id="orders"></div></div></div></div>
+<div id="cart" class="page"><h3>Shopping Cart</h3><div id="cartItems" style="margin-top:10px"></div><h3 id="total" style="margin-top:10px">Total: ₹0</h3><button class="btn o" onclick="checkout()">Proceed to Buy on Amazon</button><p style="font-size:11px;color:gray;text-align:center">Payment: UPI | Card | COD - Secured by Amazon</p></div>
 
-<div class="modal" id="loginM"><div class="box"><div style="display:flex;justify-content:space-between"><h3>Login</h3><span onclick="closeM('loginM')">X</span></div><input id="ln" placeholder="Naam"><input id="lm" placeholder="Mobile No"><button class="btn b2" onclick="doLogin()">Login</button></div></div>
+<div id="account" class="page"><div class="card"><h3 id="uname">Hello, Guest</h3><button class="btn y" onclick="showModal('login')">Login</button><button class="btn" style="background:#eee" onclick="showModal('admin')">Admin Panel</button><h4 style="margin-top:15px">My Orders</h4><div id="orders"></div></div></div>
 
-<div class="modal" id="adminM"><div class="box"><div style="display:flex;justify-content:space-between"><h3>Admin Panel</h3><span onclick="closeM('adminM')">X</span></div><input id="apass" placeholder="Admin Code likho"><div id="adminArea" style="display:none"><h4>Add New Product</h4><input id="an" placeholder="Product Name"><input id="ap" placeholder="Price - 999"><input id="am" placeholder="MRP - 1999"><input id="ai" placeholder="Image URL"><input id="ak" placeholder="Amazon Keyword - earbuds"><select id="ac"><option value="earbuds">Earbuds</option><option value="watch">Watch</option><option value="laptop">Laptop</option><option value="mobile">Mobile</option></select><button class="btn b2" onclick="addProd()">Add Product</button></div><button class="btn b1" onclick="checkAdmin()">Unlock</button></div></div>
+<div class="modal" id="login"><div class="mbox"><h3>Login</h3><input id="ln" placeholder="Apna Naam"><input id="lm" placeholder="Mobile"><button class="btn o" onclick="login()">Login</button><button class="btn" style="background:#eee" onclick="hideModal('login')">Close</button></div></div>
 
-<div class="modal" id="checkM"><div class="box"><h3>Checkout - Payment</h3><input placeholder="Full Address"><input placeholder="Pincode"><select><option>COD - Cash on Delivery</option><option>UPI - Amazon Pay</option><option>Card Payment</option></select><p style="font-size:11px;color:green">Payment Secured by Amazon. Aap Amazon pe pay karoge, commission aapko milega ID: shopzone010e-21 se.</p><button class="btn b2" onclick="placeOrder()">Place Order on Amazon</button><button class="btn" style="background:#eee" onclick="closeM('checkM')">Cancel</button></div></div>
+<div class="modal" id="admin"><div class="mbox"><h3>Admin Panel</h3><input id="acode" placeholder="Code: rahul123"><div id="aform" style="display:none"><input id="an" placeholder="Product Name"><input id="ap" placeholder="Price"><input id="am" placeholder="MRP"><input id="ai" placeholder="Image Link (https://...)"><input id="ak" placeholder="Amazon Keyword"><button class="btn o" onclick="addP()">Add Product</button></div><button class="btn y" onclick="unlock()">Unlock</button><button class="btn" style="background:#eee" onclick="hideModal('admin')">Close</button></div></div>
 
 <div class="bottom">
-<div class="bitem" onclick="show('home')">🏠<br>Home</div>
-<div class="bitem" onclick="document.getElementById('q').focus()">🔍<br>Search</div>
-<div class="bitem" onclick="show('cart')">🛒<br>Cart</div>
-<div class="bitem" onclick="show('account')">👤<br>Account</div>
+<div onclick="openPage('home')">🏠<br>Home</div>
+<div onclick="openPage('cart')">🛒<br>Cart</div>
+<div onclick="openPage('account')">👤<br>Account</div>
+<div onclick="alert('ShopZone Full Amazon System')">⚙️<br>System</div>
 </div>
 
 <script>
 const TAG="shopzone010e-21";
-let products=JSON.parse(localStorage.getItem('sz_products'))||[
-{name:"Boat Airdopes 121",price:799,mrp:2990,cat:"earbuds",img:"https://m.media-amazon.com/images/I/71k3gO6yyKL._SL1500_.jpg",kw:"boat+earbuds"},
-{name:"Fire-Boltt Watch",price:1799,mrp:7999,cat:"watch",img:"https://m.media-amazon.com/images/I/61ActU9NS0L._SL1500_.jpg",kw:"fire+boltt+watch"},
-{name:"HP Laptop i5",price:38990,mrp:65000,cat:"laptop",img:"https://m.media-amazon.com/images/I/71e9V2k2RXL._SL1500_.jpg",kw:"hp+laptop"},
-{name:"Redmi Note 13 Pro",price:24999,mrp:32999,cat:"mobile",img:"https://m.media-amazon.com/images/I/71CXhVhpM0L._SL1500_.jpg",kw:"redmi+note+13"}
+let list=JSON.parse(localStorage.getItem('sz_list'))||[
+{n:"boAt Airdopes 121 PRO",p:799,m:2990,img:"https://m.media-amazon.com/images/I/71k3gO6yyKL._SL1500_.jpg",k:"boat+airdropes"},
+{n:"Fire-Boltt Ninja 3 Watch",p:1799,m:7999,img:"https://m.media-amazon.com/images/I/61ActU9NS0L._SL1500_.jpg",k:"fire+boltt+watch"},
+{n:"HP 15s i5 Laptop",p:38990,m:65000,img:"https://m.media-amazon.com/images/I/71e9V2k2RXL._SL1500_.jpg",k:"hp+laptop"},
+{n:"Redmi Note 13 Pro",p:24999,m:32999,img:"https://m.media-amazon.com/images/I/71CXhVhpM0L._SL1500_.jpg",k:"redmi+note+13"},
+{n:"Mi Power Bank 20000mAh",p:1999,m:3499,img:"https://m.media-amazon.com/images/I/71lVwl3q-kL._SL1500_.jpg",k:"power+bank"},
+{n:"JBL Go 3 Speaker",p:2899,m:3999,img:"https://m.media-amazon.com/images/I/71o8Q5XJS5L._SL1500_.jpg",k:"jbl+speaker"}
 ];
 let cart=JSON.parse(localStorage.getItem('sz_cart')||'[]');
-let wish=JSON.parse(localStorage.getItem('sz_wish')||'[]');
 let orders=JSON.parse(localStorage.getItem('sz_orders')||'[]');
-
-function save(){localStorage.setItem('sz_products',JSON.stringify(products));localStorage.setItem('sz_cart',JSON.stringify(cart));localStorage.setItem('sz_wish',JSON.stringify(wish));localStorage.setItem('sz_orders',JSON.stringify(orders));}
+function save(){localStorage.setItem('sz_list',JSON.stringify(list));localStorage.setItem('sz_cart',JSON.stringify(cart));localStorage.setItem('sz_orders',JSON.stringify(orders))}
 function render(){
-document.getElementById('plist').innerHTML=products.map((p,i)=>`<div class="card"><img src="${p.img}"><h4 style="font-size:13px;height:32px;overflow:hidden">${p.name}</h4><div><b>₹${p.price}</b> <span style="font-size:11px;color:gray;text-decoration:line-through">₹${p.mrp}</span></div><button class="btn b1" onclick="addCart(${i})">Add to Cart</button><button class="btn b2" onclick="buy(${i})">Buy on Amazon</button><div style="font-size:10px;color:green;text-align:center;margin-top:4px">✓ COD • Free Delivery</div><div style="text-align:center;margin-top:4px"><span onclick="addWish(${i})" style="font-size:12px;cursor:pointer">❤️ Wishlist</span></div></div>`).join('');
-document.getElementById('cC').innerText=cart.length;document.getElementById('wC').innerText=wish.length;
-document.getElementById('cartList').innerHTML=cart.map((p,i)=>`<div style="background:#fff;padding:10px;border-radius:8px;margin-bottom:8px;display:flex;gap:10px"><img src="${p.img}" style="width:60px;height:60px;object-fit:contain"><div style="flex:1"><div style="font-size:13px">${p.name}</div><b>₹${p.price}</b><br><span style="color:red;font-size:12px;cursor:pointer" onclick="cart.splice(${i},1);save();render();renderCart()">Remove</span></div></div>`).join('')||'Cart khali hai';
-document.getElementById('wishList').innerHTML=wish.map((p,i)=>`<div class="card"><img src="${p.img}"><h4>${p.name}</h4><b>₹${p.price}</b><button class="btn b1" onclick="addCartW(${i})">Add to Cart</button></div>`).join('')||'Wishlist khali';
-document.getElementById('cTotal').innerText='Total: ₹'+cart.reduce((s,p)=>s+ +p.price,0);
-document.getElementById('orders').innerHTML=orders.map(o=>`<div style="border-bottom:1px solid #eee;padding:6px 0;font-size:13px">${o.name} - ₹${o.price} - ${o.date}</div>`).join('')||'Koi order nahi';
-let u=localStorage.getItem('sz_user');if(u){document.getElementById('uName').innerText='Hello, '+u;document.getElementById('uInfo').innerText='Mobile: '+(localStorage.getItem('sz_mobile')||'')}
+document.getElementById('products').innerHTML=list.map((x,i)=>`<div class="card"><img src="${x.img}" style="width:100%;height:120px;object-fit:contain"><div class="badge">50% OFF</div><div style="font-size:13px;height:32px;overflow:hidden;margin:4px 0">${x.n}</div><div><b>₹${x.p}</b> <span style="font-size:11px;color:gray;text-decoration:line-through">₹${x.m}</span></div><button class="btn y" onclick="addCart(${i})">Add to Cart</button><button class="btn o" onclick="buy(${i})">Buy on Amazon</button></div>`).join('');
+document.getElementById('cc').innerText=cart.length;
+document.getElementById('cartItems').innerHTML=cart.map((x,i)=>`<div class="card" style="display:flex;gap:10px;margin-bottom:8px"><img src="${x.img}" style="width:60px;height:60px;object-fit:contain"><div><div style="font-size:13px">${x.n}</div><b>₹${x.p}</b><br><span style="color:red;font-size:12px" onclick="cart.splice(${i},1);save();render()">Remove</span></div></div>`).join('')||'Cart Khali Hai';
+document.getElementById('total').innerText='Total: ₹'+cart.reduce((s,a)=>s+Number(a.p),0);
+document.getElementById('orders').innerHTML=orders.map(o=>`<div style="font-size:13px;border-bottom:1px solid #eee;padding:5px 0">${o.n} - ₹${o.p} - ${o.d}</div>`).join('')||'No Orders';
+let u=localStorage.getItem('sz_user');if(u)document.getElementById('uname').innerText='Hello, '+u;
 }
-function renderCart(){render()}
-function addCart(i){cart.push(products[i]);save();render();alert('Cart me add ho gaya')}
-function addWish(i){wish.push(products[i]);save();render();alert('Wishlist me add')}
-function addCartW(i){cart.push(wish[i]);save();render()}
-function buy(i){window.open(`https://www.amazon.in/s?k=${products[i].kw}&tag=${TAG}`,'_blank')}
-function show(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active')}
-function openModal(id){document.getElementById(id).classList.add('active')} function closeM(id){document.getElementById(id).classList.remove('active')}
-function doLogin(){let n=document.getElementById('ln').value, m=document.getElementById('lm').value;if(!n){alert('Naam likho');return;}localStorage.setItem('sz_user',n);localStorage.setItem('sz_mobile',m);closeM('loginM');render()}
-function checkAdmin(){if(document.getElementById('apass').value==='rahul123'){document.getElementById('adminArea').style.display='block'}else alert('Galat code')}
-function addProd(){let p={name:document.getElementById('an').value,price:document.getElementById('ap').value,mrp:document.getElementById('am').value,img:document.getElementById('ai').value,kw:document.getElementById('ak').value,cat:document.getElementById('ac').value};if(!p.name||!p.price)return alert('Sab bharo');products.push(p);save();render();alert('Product Add ho gaya!');closeM('adminM')}
-function openCheckout(){if(!cart.length)return alert('Cart khali hai');openModal('checkM')}
-function placeOrder(){let q=cart.map(c=>c.kw).join('+');orders.push(...cart.map(c=>({...c,date:new Date().toLocaleDateString()})));cart=[];save();render();closeM('checkM');window.open(`https://www.amazon.in/s?k=${q}&tag=${TAG}`,'_blank');alert('Order Amazon pe jayega, waha payment karo. Commission aayega!')}
-document.getElementById('q').addEventListener('input',e=>{let v=e.target.value.toLowerCase();let f=v?products.filter(p=>p.name.toLowerCase().includes(v)):products;document.getElementById('plist').innerHTML=f.map((p,i)=>`<div class="card"><img src="${p.img}"><h4>${p.name}</h4><b>₹${p.price}</b><button class="btn b1" onclick="addCart(${products.indexOf(p)})">Add to Cart</button><button class="btn b2" onclick="buy(${products.indexOf(p)})">Buy</button></div>`).join('')})
+function addCart(i){cart.push(list[i]);save();render();alert('Cart me add ho gaya')}
+function buy(i){window.open('https://www.amazon.in/s?k='+list[i].k+'&tag='+TAG,'_blank')}
+function openPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function showModal(id){document.getElementById(id).classList.add('on')}
+function hideModal(id){document.getElementById(id).classList.remove('on')}
+function login(){let n=document.getElementById('ln').value;if(!n)return alert('Naam likho');localStorage.setItem('sz_user',n);localStorage.setItem('sz_mob',document.getElementById('lm').value);hideModal('login');render()}
+function unlock(){if(document.getElementById('acode').value==='rahul123'){document.getElementById('aform').style.display='block'}else alert('Galat Code')}
+function addP(){let o={n:document.getElementById('an').value,p:document.getElementById('ap').value,m:document.getElementById('am').value,img:document.getElementById('ai').value,k:document.getElementById('ak').value};if(!o.n||!o.p)return alert('Naam Price likho');list.push(o);save();render();alert('Product Add Ho Gaya');hideModal('admin')}
+function checkout(){if(!cart.length)return alert('Cart Khali Hai');let q=cart.map(c=>c.k).join('+');orders.push(...cart.map(c=>({n:c.n,p:c.p,d:new Date().toLocaleDateString()})));cart=[];save();render();window.open('https://www.amazon.in/s?k='+q+'&tag='+TAG,'_blank');openPage('account')}
+document.getElementById('search').addEventListener('input',e=>{let v=e.target.value.toLowerCase();let f=v?list.filter(x=>x.n.toLowerCase().includes(v)):list;document.getElementById('products').innerHTML=f.map((x,i)=>`<div class="card"><img src="${x.img}" style="width:100%;height:120px;object-fit:contain"><div>${x.n}</div><b>₹${x.p}</b><button class="btn y" onclick="addCart(${list.indexOf(x)})">Add to Cart</button><button class="btn o" onclick="buy(${list.indexOf(x)})">Buy</button></div>`).join('')});
 render();
 </script>
 </body>
